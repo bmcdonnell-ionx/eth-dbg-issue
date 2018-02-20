@@ -102,6 +102,10 @@ int main()
    }
 
    DigitalOut led1(LED1, 1); // off
+   Serial serial(USBTX, USBRX, 115200);
+
+   printf("\r\n---\r\n"
+         "phy_write() returned %i.\r\n", ret);
 
    while (true)
    {
