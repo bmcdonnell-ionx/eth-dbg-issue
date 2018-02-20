@@ -71,12 +71,14 @@ static int phy_write(unsigned int PhyReg, unsigned short Data)
 }
 
 
+static int ret;
 
-// main() runs in its own thread in the OS
-int main()
+extern "C"
 {
-   int ret;
-
+   /* This function can be implemented by the target to perform higher level target initialization, before the mbed OS or
+    * RTX is started.
+    */
+   void mbed_sdk_init(void)
    {
       // Initialize Ethernet by instantiating the Ethernet class.
       // The Ethernet interface doesn't contain a power-down
@@ -100,7 +102,12 @@ int main()
       //  erase, (3) power cycle again.
       ret = phy_write(PHY_REG_BMCR, PHY_BMCR_PWR_DOWN);
    }
+}
 
+
+// main() runs in its own thread in the OS
+int main()
+{
    DigitalOut led1(LED1, 1); // off
    Serial serial(USBTX, USBRX, 115200);
 
